@@ -26,20 +26,20 @@ String.prototype.trim = function() {
 String.prototype.ltrim = function() {
 	if (this)
 		return this.replace(/^\s+/, '');
-}
+};
 
 String.prototype.rtrim = function() {
 	return this.replace(/\s+$/, '');
-}
+};
 
 String.prototype.fulltrim = function() {
 	return this.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g, '')
 			.replace(/\s+/g, ' ');
-}
+};
 
 /**
  * start trim on string from the left string side
- * @param {} s
+ * @param {String} s
  * @return {Boolean}
  */
 
@@ -55,7 +55,7 @@ function ltrim(s) {
 
 /**
  * start trim on string from the right string side
- * @param {} s
+ * @param {String} s
  * @return {Boolean}
  */
 function rtrim(s) {
@@ -70,7 +70,7 @@ function rtrim(s) {
 
 /**
  * removing the last charecter from given string
- * @param {} s
+ * @param {String} s
  */
 function rlastchar(s) {
 	if (!s)
@@ -84,14 +84,14 @@ function foundIn(component, xtype) {
 	for (i; i < xtypes.length; i++) {
 		if (xtype == xtypes[i])
 			return true
-	};
+    }
 	return false
 }
 
 /**
  * main function return  extjs component id from the Exjs component manager
- * @param {} text - text to search (title,lable,text....)
- * @param {} xtype - component type like grid,textfield,combobox ....)
+ * @param {String} text - text to search (title,lable,text....)
+ * @param {String} xtype - component type like grid,textfield,combobox ....)
  * @return {}
  */
 var findComponentByText = function(text, xtype, incInvisible, debug) {
@@ -158,47 +158,7 @@ var findComponentByText = function(text, xtype, incInvisible, debug) {
 		}
 		return null;
 	}
-}
-
-/**
- * WARNING -- DOESN'T WORK WELL! Causes problems... use the new version instead
- * 
- * trying to create a valid selenium Xpath from Ext element
- * @param {} elm
- * @return {}
- */
-/*
-function createXPathFromElement(elm) {
-	var allNodes = document.getElementsByTagName('*');
-	for (segs = []; elm && elm.nodeType == 1; elm = elm.parentNode) {
-		if (elm.hasAttribute('id')) {
-			var uniqueIdCount = 0;
-			for (var n = 0; n < allNodes.length; n++) {
-				if (allNodes[n].hasAttribute('id') && allNodes[n].id == elm.id)
-					uniqueIdCount++;
-				if (uniqueIdCount > 1)
-					break;
-			};
-			if (uniqueIdCount == 1) {
-				segs.unshift('id("' + elm.getAttribute('id') + '")');
-				return segs.join('/');
-			} else {
-				segs.unshift(elm.localName.toLowerCase() + '[@id="'
-						+ elm.getAttribute('id') + '"]');
-			}
-		} else if (elm.hasAttribute('class')) {
-			segs.unshift(elm.localName.toLowerCase() + '[@class="'
-					+ elm.getAttribute('class') + '"]');
-		} else {
-			for (i = 1, sib = elm.previousSibling; sib; sib = sib.previousSibling) {
-				if (sib.localName == elm.localName)
-					i++;
-			};
-			segs.unshift(elm.localName.toLowerCase() + '[' + i + ']');
-		};
-	};
-	return segs.length ? '/' + segs.join('/') : null;
-};*/
+};
 
 function getElementIdx(elt)
 {
@@ -242,7 +202,7 @@ function lookupElementByXPath(path) {
 function findInComponentByText(conponentId, text, xtype) {
 	var item = null;
 
-	var component = Ext.getCmp(conponentId)
+    var component = Ext.getCmp(conponentId);
 	var componentsArray = component.findBy(function(c) {
 				return true
 			});
@@ -300,4 +260,4 @@ ttp.logDebug = function(message){
 	if(console){
 		console.log(message)
 	}
-}
+};

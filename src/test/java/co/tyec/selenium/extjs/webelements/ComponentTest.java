@@ -1,15 +1,13 @@
 package co.tyec.selenium.extjs.webelements;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import static org.junit.Assert.*;
 
 /**
  * The class <code>ComponentTest</code> contains tests for the class <code>{@link ExtJSComponent}</code>.
@@ -128,7 +126,6 @@ public class ComponentTest {
 		final ExtJSComponent cmp_result = new ExtJSComponent(driver, ExtJSQueryType.GetCmp, "cmp_id");
 		Mockito.when(js.executeScript(Mockito.contains("var extCmp = Ext.getCmp"))).thenReturn("something");
 		final boolean result = cmp_result.execScriptOnExtJSCmpReturnIsNull(cmp_result.getExpression());
-		
 		assertEquals(false, result);
 	}
 	

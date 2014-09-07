@@ -1,26 +1,18 @@
 package co.tyec.selenium.extjs.webelements;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.swing.text.html.HTML;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.StaleElementReferenceException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.swing.text.html.HTML;
+import java.util.ArrayList;
+import java.util.List;
+
 public class ComboBox extends ExtJSComponent {
-	private static final By BOUND_LIST_LOCATOR = By.cssSelector("li.x-boundlist-item");
-	
 	final static Logger logger = LoggerFactory.getLogger(ComboBox.class);
-	
 	static final String setComboBox = "SExt.prototype.setComboBox = function (query, item, uuid) {"
 			+ "var success = false;"
 			+ "var comp = this.findVisibleComponent(query);"
@@ -32,12 +24,12 @@ public class ComboBox extends ExtJSComponent {
 			+ "}"
 			+ "writeDataToDiv(success, uuid);"
 			+ "}";
-	
-	private static final By TEXT_INPUT_LOCATOR = By.cssSelector("input.x-form-field.x-form-text");
-	
-	private WebElement input;
-	
-	private String listDynId = null;
+    private static final By BOUND_LIST_LOCATOR = By.cssSelector("li.x-boundlist-item");
+    private static final By TEXT_INPUT_LOCATOR = By.cssSelector("input.x-form-field.x-form-text");
+
+    private WebElement input;
+
+    private String listDynId = null;
 	
 	public ComboBox(WebDriver driver, ExtJSQueryType queryType, String query) {
 		super(driver, queryType, query);
@@ -207,12 +199,13 @@ public class ComboBox extends ExtJSComponent {
 	 * @return String
 	 */
 	public String getValue() {
-		return (String) execScriptOnExtJsCmp(String.format("return extCmp.getValue();"));
-	}
-	
-	private Boolean isDirty() {
-		return (Boolean) js.executeScript(SCRIPT_TOP_ELEMENT_TO_EXT_JS_CMP
-				+ " return extCmp.isDirty();", getTextInput());
+        return (String) execScriptOnExtJsCmp("return extCmp.getValue();");
+    }
+
+
+    private Boolean isDirty() {
+        return (Boolean) js.executeScript(SCRIPT_TOP_ELEMENT_TO_EXT_JS_CMP
+                + " return extCmp.isDirty();", getTextInput());
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 package co.tyec.selenium.extjs.webelements;
 
 public enum ExtJSQueryType {
-	ComponentQuery, Custom, GetCmp
+    ComponentQuery, ComponentQuery3, Custom, GetCmp
 }

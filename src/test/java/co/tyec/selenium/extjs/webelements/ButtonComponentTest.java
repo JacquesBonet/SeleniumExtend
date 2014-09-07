@@ -1,13 +1,12 @@
 package co.tyec.selenium.extjs.webelements;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Asaf Levy
@@ -18,12 +17,6 @@ public class ButtonComponentTest {
 	private WebDriver driver;
 	
 	private JavascriptExecutor js;
-	
-	@Test
-	public void nullTest() {
-		assertTrue(null == null);
-		assertEquals(false, "null".equals(null));
-	}
 	
 	@Before
 	public void setUp() throws Exception {

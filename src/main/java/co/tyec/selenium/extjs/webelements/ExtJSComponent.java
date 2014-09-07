@@ -1,31 +1,15 @@
 package co.tyec.selenium.extjs.webelements;
 
-import java.util.concurrent.TimeUnit;
-
+import com.outbrain.selenium.util.ThreadUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.internal.seleniumemulation.JavascriptLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.outbrain.selenium.util.ThreadUtils;
+import java.util.concurrent.TimeUnit;
 
 public class ExtJSComponent extends JSExtendedWebElement {
-	
-	static final private String FUNCTION_findVisibleComponentElement = "SExt.findVisibleComponentElement = function (query) {"
-			+ "  var queryResultArray = (window.frames[0] &&  window.frames[0].Ext) ? window.frames[0].Ext.ComponentQuery.query(query) : Ext.ComponentQuery.query(query);"
-			+ "  var single = null;"
-			+ "  Ext.Array.every(queryResultArray, function(comp) {"
-			+ "	     if (comp != null && comp.isVisible(true)){"
-			+ "	       single = comp;"
-			+ "	     }"
-			+ "	     return (single != null);" /* return false will stop looping through array */
-			+ "	   });"
-			+ "  var el = (single != null ? single.getEl().dom : null);"
-			+ "  return el;"
-			+ "}";
-	
-	final static Logger logger = LoggerFactory.getLogger(ExtJSComponent.class);
 	
 	/**
 	 * This is meant to be a general way to convert a specific id to the general id ( Ex. td[@id="combobox-1009-bodyEl"] to comboBox-1009)
@@ -34,35 +18,33 @@ public class ExtJSComponent extends JSExtendedWebElement {
 			+ ".replace(/-\\w*El$/,'')" /* -inputEl, -bodyEl, -anythingEl */
 			+ ".replace('-triggerWrap','');"
 			+ "var extCmp = Ext.getCmp(id);";
-	
-	static private final String SCRIPT_TOP_ELEMENT_TO_EXT_JS_ID = SCRIPT_TOP_ELEMENT_TO_EXT_JS_CMP
-			+ ";return extCmp.getId();"; // should this be .id?
-	
-	/**
-	 * ExtJS Query that would be used in Ext.ComponentQuery.query("[name='myCheckbox']");
-	 */
-	static protected String convertQueryTypeAndQueryToScript(ExtJSQueryType queryType, String query) {
-		String queryScript = null;
-		
-		if (queryType == null) {
-			return null;
-		} else if (queryType.equals(ExtJSQueryType.ComponentQuery)) {
-			queryScript = String.format("%s; %s; return SExt.findVisibleComponentElement(\"%s\");", FUNCTION_DEFINE_SExt, FUNCTION_findVisibleComponentElement,
-					query);
-		} else if (queryType.equals(ExtJSQueryType.GetCmp)) {
-			queryScript = String.format("return Ext.getCmp(\"%s\").getEl().dom;", query);
-		} else {
-			queryScript = query;
-		}
-		
-		return queryScript;
-	}
-	
-	protected String extJsCmpId = null;
-	
-	final String FUNCTION_getXPathTo = "SExt.getXPathTo = function getXPathTo(element) {"
-			+ "    if (element.id!=='')"
-			+ "        return 'id(\"'+element.id+'\")';"
+    final static Logger logger = LoggerFactory.getLogger(ExtJSComponent.class);
+    static final private String FUNCTION_findVisibleComponentElement = "SExt.findVisibleComponentElement = function (query) {"
+            + "  var queryResultArray = (window.frames[0] &&  window.frames[0].Ext) ? window.frames[0].Ext.ComponentQuery.query(query) : Ext.ComponentQuery.query(query);"
+            + "  var single = null;"
+            + "  for( var i = 0; i < queryResultArray.length;  i++) {"
+            + "      single = queryResultArray[i];"
+            + "	     if (single != null && single.isVisible(true))"
+            + "	        break;"
+            + "	 };"
+            + "  var el = (single != null ? single.getEl().dom : null);"
+            + "  return el;"
+            + "}";
+    static final private String FUNCTION_findVisibleComponentElement3 = "SExt.findVisibleComponentElement = function (query) {"
+            + "  var queryResultArray = (window.frames[0] &&  window.frames[0].Ext) ? window.frames[0].Ext.query(query) : Ext.query(query);"
+            + "  var single = null;"
+            + "  for( var i = 0; i < queryResultArray.length;  i++) {"
+            + "      single = queryResultArray[i];"
+            + "	     if (single != null)"
+            + "	        break;"
+            + "	 };"
+            + "  return single;"
+            + "}";
+    static private final String SCRIPT_TOP_ELEMENT_TO_EXT_JS_ID = SCRIPT_TOP_ELEMENT_TO_EXT_JS_CMP
+            + "return extCmp.getId();"; // should this be .id?
+    final String FUNCTION_getXPathTo = "SExt.getXPathTo = function getXPathTo(element) {"
+            + "    if (element.id!=='')"
+            + "        return 'id(\"'+element.id+'\")';"
 			+ "    if (element===document.body)"
 			+ "        return element.tagName;"
 			+ "    var ix= 0;"
@@ -75,13 +57,14 @@ public class ExtJSComponent extends JSExtendedWebElement {
 			+ "            ix++;"
 			+ "    }"
 			+ "}";
-	
-	/**
-	 * @param driver
-	 * @param getCmpQuery
-	 *            - ExtJS Query that would be used in Ext.getCmp('combobox-1001');
-	 */
-	public ExtJSComponent(WebDriver driver, ExtJSQueryType queryType, String query) {
+    protected String extJsCmpId = null;
+
+    /**
+     * @param driver
+     * @param queryType
+     * @param query     - ExtJS Query that would be used in Ext.getCmp('combobox-1001');
+     */
+    public ExtJSComponent(WebDriver driver, ExtJSQueryType queryType, String query) {
 		super(driver, convertQueryTypeAndQueryToScript(queryType, query));
 		if(queryType.equals(ExtJSQueryType.GetCmp)) {
 			this.extJsCmpId = query;
@@ -98,9 +81,32 @@ public class ExtJSComponent extends JSExtendedWebElement {
 	}
 	
 	/**
-	 * Method blur.
-	 * 
-	 * @deprecated
+     * ExtJS Query that would be used in Ext.ComponentQuery.query("[name='myCheckbox']");
+     */
+    static protected String convertQueryTypeAndQueryToScript(ExtJSQueryType queryType, String query) {
+        String queryScript = null;
+
+        if (queryType == null) {
+            return null;
+        } else if (queryType.equals(ExtJSQueryType.ComponentQuery)) {
+            queryScript = String.format("%s; %s; return SExt.findVisibleComponentElement(\"%s\");", FUNCTION_DEFINE_SExt, FUNCTION_findVisibleComponentElement,
+                    query);
+        } else if (queryType.equals(ExtJSQueryType.ComponentQuery3)) {
+            queryScript = String.format("%s; %s; return SExt.findVisibleComponentElement(\"%s\");", FUNCTION_DEFINE_SExt, FUNCTION_findVisibleComponentElement3,
+                    query);
+        } else if (queryType.equals(ExtJSQueryType.GetCmp)) {
+            queryScript = String.format("return Ext.getCmp(\"%s\").getEl().dom;", query);
+        } else {
+            queryScript = query;
+        }
+
+        return queryScript;
+    }
+
+    /**
+     * Method blur.
+     *
+     * @deprecated
 	 */
 	public void blur() {
 		fireEvent("blur");
@@ -184,11 +190,13 @@ public class ExtJSComponent extends JSExtendedWebElement {
 	 * @return String
 	 */
 	public WebElement getElDom() {
-		return (WebElement) execScriptOnExtJsCmp("return extCmp.getEl().dom");
-	}
-	
-	/**
-	 * Returns the absolute expression that resolves this proxy's Ext component.
+        if (topElement != null)
+            return topElement;
+        return (WebElement) execScriptOnExtJsCmp("return extCmp.getEl().dom");
+    }
+
+    /**
+     * Returns the absolute expression that resolves this proxy's Ext component.
 	 * 
 	 * @return String
 	 */

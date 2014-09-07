@@ -5,6 +5,7 @@ import org.mockito.Mockito;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 
+
 public class GridComponentTest {
 	WebDriver driver;
 	
@@ -22,20 +23,20 @@ public class GridComponentTest {
 	 * testCheckBox Method
 	 */
 	
-//	@Test
-//	public void testGridTypeLocator() {
-//		// chang this line to allow some creation of Grid. see Checkbox.
-//		WebElement mockedEl = Mockito.mock(WebElement.class);
-//		Mockito.when(js.executeScript("window.findComponentByText(null,'grid')")).thenReturn(m);
-//		Grid grid = new Grid(driver, ExtJSQueryType.ComponentQuery, "[text='grid']");
-//		assertNotNull(grid);
-//		
-//		Mockito.when(js.executeScript("window.findComponentByText(null,'grid')")).thenReturn("grid_id");
-//		assertEquals("Grid id is incorrect", "grid_id", grid.getComponentId());
-//	}
-//	
-	// /**
-	// * Checking Grid getCellDomObject method
+/*	@Test
+    public void testGridTypeLocator() {
+		// chang this line to allow some creation of Grid. see Checkbox.
+		WebElement mockedEl = Mockito.mock(WebElement.class);
+		Mockito.when(js.executeScript("window.findComponentByText(null,'grid')")).thenReturn("grid_id");
+		Grid grid = new Grid(driver, ExtJSQueryType.ComponentQuery, "[text='grid']");
+		Assert.assertNotNull(grid);
+
+		Mockito.when(js.executeScript("window.findComponentByText(null,'grid')")).thenReturn("grid_id");
+		Assert.assertEquals("Grid id is incorrect", "grid_id", grid.getComponentId());
+	}
+*/
+    // /**
+    // * Checking Grid getCellDomObject method
 	// */
 	// @Test
 	// public void testGridGetCellDomObject() {

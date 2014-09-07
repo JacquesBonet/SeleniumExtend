@@ -1,22 +1,21 @@
 package co.tyec.selenium.extjs.webelements;
 
+import com.outbrain.selenium.util.ExtjsUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 
-import com.outbrain.selenium.util.ExtjsUtils;
-
 /**
  * 
  */
 public class Grid extends ExtJSComponent {
-	
+
 	/**
 	 * Field gridExp.
 	 */
 	String gridExp = "";
-	
+
 	public Grid(WebDriver driver, ExtJSQueryType queryType, String query) {
 		super(driver, queryType, query);
 		gridExp = getExpression();
@@ -115,14 +114,34 @@ public class Grid extends ExtJSComponent {
 	 */
 	
 	public Grid editCellAndSetValue(final int row, final int col, final String value) {
-		
-		execScriptClean(String.format("%s.getColumnModel().getCellEditor(%d,%d).setValue('%s')", gridExp, col, row, value));
-		return this;
-	}
-	
-	/**
-	 * searches for a row with a specific value in a specified column, and returns the row index
-	 * 
+
+        execScriptOnExtJsCmp(String.format("extCmp.startEditing(%d,%d)", row, col));
+        execScriptOnExtJsCmp(String.format("extCmp.getColumnModel().getCellEditor(%d,%d).setValue('%s')", col, row, value));
+        execScriptOnExtJsCmp(String.format("extCmp.stopEditing()"));
+        return this;
+    }
+
+    /**
+     * If the cell in an editor grid is currently being edited, change its value to the speicified one
+     * Value is decimal
+     *
+     * @param row
+     * @param col
+     * @param value
+     * @return Grid
+     */
+
+    public Grid editCellAndSetValue(final int row, final int col, final int value) {
+
+        execScriptOnExtJsCmp(String.format("extCmp.startEditing(%d,%d)", row, col));
+        execScriptOnExtJsCmp(String.format("extCmp.getColumnModel().getCellEditor(%d,%d).setValue(%d)", col, row, value));
+        execScriptOnExtJsCmp(String.format("extCmp.stopEditing()"));
+        return this;
+    }
+
+    /**
+     * searches for a row with a specific value in a specified column, and returns the row index
+     *
 	 * @param col
 	 *            - the column to search over
 	 * @param requiredValue
@@ -156,14 +175,12 @@ public class Grid extends ExtJSComponent {
 	 * @return String
 	 */
 	public String getCellValue(final int row, final int col) {
-		
-		final String colExp = String.format("window.Ext.fly(%s.view.getCell(%d,%d)).dom.textContent", gridExp, row, col);
-		
-		return (String) execScriptClean(colExp);
-	}
-	
-	/**
-	 * return the header of the grid by given column index
+
+        return (String) execScriptOnExtJsCmp(String.format("return Ext.fly(extCmp.getView().getCell(%d,%d)).dom.textContent", row, col));
+    }
+
+    /**
+     * return the header of the grid by given column index
 	 * 
 	 * @param colIndex
 	 * @return String
@@ -190,18 +207,18 @@ public class Grid extends ExtJSComponent {
 	 */
 	public Long getGridStoreCount() {
 		waitToLoad();
-		return (Long) execScriptOnExtJsCmp("extCmp.getStore().data.length");
-	}
-	
-	/**
-	 * @return array of id
+        return (Long) execScriptOnExtJsCmp("return extCmp.getStore().data.length");
+    }
+
+    /**
+     * @return array of id
 	 */
 	public String[] getKeys() {
-		return ((String) execScriptOnExtJsCmp("return el.getStore().data.keys")).split(",");
-	}
-	
-	/**
-	 * return selected row index
+        return ((String) execScriptOnExtJsCmp("return extCmp.getStore().data.keys")).split(",");
+    }
+
+    /**
+     * return selected row index
 	 * 
 	 * @return int
 	 */
