@@ -95,6 +95,7 @@ public class CheckboxIT3 extends BaseTest {
         Assert.assertEquals("Arizona", value);
     }
 
+
     @Test
     public void selectExtJSComboBoxByWebdriver() {
 
