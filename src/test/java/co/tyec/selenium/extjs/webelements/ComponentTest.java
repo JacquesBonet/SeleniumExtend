@@ -82,7 +82,6 @@ public class ComponentTest {
 		assertEquals("cmp_id", result.getComponentId());
 		assertEquals(true, result.visible());
 		assertEquals(false, result.disabled());
-		assertEquals(false, result.isDisabled());
 		assertEquals("window.Ext.getCmp('cmp_id')", result.getExpression());
 		assertEquals(false, result.hidden());
 		assertEquals("cmp_id", result.getComponentId());

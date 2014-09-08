@@ -27,21 +27,10 @@ public class Button extends ExtJSComponent {
 	 * @throws InterruptedException
 	 */
 	public void clickAndWaitForAjaxValid() throws InterruptedException {
-		waitForExecScriptToReturnTrue(".disabled == false");
-		click();
-		wait(2);
-		waitForFinishAjaxRequest();
-		waitForDialogFailure();
-	}
-	
-	/**
-	 * return true if the component is disabled
-	 * 
-	 * @return boolean
-	 */
-	@Override
-	public Boolean disabled() {
-		return execScriptOnExtJsCmpReturnBoolean("return extCmp.disabled");
-	}
-	
+        waitForExecScriptToReturnTrue(".disabled == false");
+        click();
+        wait(2);
+        waitForFinishAjaxRequest();
+        waitForDialogFailure();
+    }
 }

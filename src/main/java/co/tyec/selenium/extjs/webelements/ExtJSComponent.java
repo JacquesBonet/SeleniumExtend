@@ -125,7 +125,7 @@ public class ExtJSComponent extends JSExtendedWebElement {
 		return execScriptClean(finalScript);
 	}
 	
-	public Boolean execScriptOnExtJsCmpReturnBoolean(String jsCode) {
+	public boolean execScriptOnExtJsCmpReturnBoolean(String jsCode) {
 		String finalScript = String.format("var extCmp = Ext.getCmp('%s'); %s;", getComponentId(), jsCode);
 		return execScriptCleanReturnBoolean(finalScript);
 	}
@@ -133,7 +133,7 @@ public class ExtJSComponent extends JSExtendedWebElement {
 	/**
 	 * Method evalNullComponent.
 	 * 
-	 * @param expr
+	 * @param jsCode
 	 *            String
 	 * @return boolean
 	 */
@@ -246,10 +246,11 @@ public class ExtJSComponent extends JSExtendedWebElement {
 	 * 
 	 * @return boolean
 	 */
-	public boolean isDisabled() {
-		return (Boolean) execScriptOnExtJsCmp("return extCmp.disabled");
-	}
-	
+    public boolean isDisabled() {
+        return execScriptOnExtJsCmpReturnBoolean("return extCmp.isDisabled()");
+    }
+
+
 	/**
 	 * Method visible.
 	 * 

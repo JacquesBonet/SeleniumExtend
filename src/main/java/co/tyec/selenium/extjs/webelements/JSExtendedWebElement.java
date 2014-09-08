@@ -76,7 +76,7 @@ public class JSExtendedWebElement {
 	 * 
 	 * @return boolean
 	 */
-	public Boolean disabled() {
+	public boolean disabled() {
 		return execScriptOnTopLevelElementReturnBoolean("return el.disabled");
 	}
 	
@@ -147,7 +147,7 @@ public class JSExtendedWebElement {
 		return execScriptOnElement(jsCode, topElement);
 	}
 	
-	protected Boolean execScriptOnTopLevelElementReturnBoolean(String jsCode) {
+	protected boolean execScriptOnTopLevelElementReturnBoolean(String jsCode) {
 		try {
 			Object res = execScriptOnElement(jsCode, topElement);
 			if (Boolean.TRUE.equals(res)
@@ -188,7 +188,7 @@ public class JSExtendedWebElement {
 	 * @param fullExpr
 	 *            String
 	 */
-	protected Boolean waitForExecScriptToReturnTrue(final String fullExpr) {
+	protected boolean waitForExecScriptToReturnTrue(final String fullExpr) {
 		for (int second = 0;; second++) {
 			if (second >= timeOutInSeconds) {
 				return false;
