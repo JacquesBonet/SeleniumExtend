@@ -24,19 +24,6 @@ public class ComponentTest {
 	}
 	
 	/**
-	 * Run the void blur() method test.
-	 * 
-	 * @throws Exception
-	 */
-	@Test
-	public void testBlur() throws Exception {
-		final ExtJSComponent result = Mockito.spy(new ExtJSComponent("cmp_id"));
-		result.blur();
-		
-		Mockito.verify(result).fireEvent("blur");
-	}
-	
-	/**
 	 * Run the boolean cleanEvalTrue(String) method test.
 	 * 
 	 * @throws Exception
