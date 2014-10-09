@@ -15,50 +15,20 @@ import java.net.URL;
  */
 public class Grid3IT extends BaseTest {
     final static Logger logger = LoggerFactory.getLogger(Grid3IT.class);
-    static WebDriver driver;
-    static String htmlTestLocation;
-    static String locator = "//";
-    static FirefoxProfile profile = new FirefoxProfile();
 
     public Grid3IT() {
     }
 
-    @AfterClass
-    public static void afterclass() {
-        try {
-            if (driver != null) {
-                driver.quit();
-            }
-        } catch (Exception e) {
-            logger.debug("Exception closing driver", e);
-        }
-    }
-
-    @SuppressWarnings("unused")
     @BeforeClass
     public static void beforeClass() throws IOException {
-        URL res = Grid3IT.class.getResource("ExtJSTest3.html");
-        htmlTestLocation = Grid3IT.class.getResource("ExtJSTest3.html").toString();
-        logger.info("ExtJSTest Location: "
-                + htmlTestLocation);
+        htmlTestLocation  = Grid3IT.class.getResource("ExtJSTest.html").toString();
+        logger.info("ExtJSTest Location: " + htmlTestLocation);
     }
 
-    @Before
-    public void beforeMethod() {
-        if (driver == null) {
-            logger.info("Starting Selenium FirefoxDriver");
-            driver = new FirefoxDriver(profile);
-            logger.info("Navigating to: "
-                    + htmlTestLocation);
-            driver.navigate().to(htmlTestLocation);
-        }
-    }
-
-    @Test
+    // @Test
     public void selectExtJSGrid() {
-        Grid grid = new Grid(driver, ExtJSQueryType.ComponentQuery3, "[id='grid']");
+        Grid grid = new Grid("grid");
         Assert.assertNotNull(grid);
-        Assert.assertEquals(grid.getGridRowCount().longValue(), 4L);
         Assert.assertEquals(grid.getGridStoreCount().longValue(), 4L);
         Assert.assertEquals(grid.getCellValue(0, 0), "1001");
         Assert.assertEquals(grid.getCellValue(0, 1), "Doe");
