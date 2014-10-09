@@ -7,18 +7,17 @@
 package co.tyec.selenium.extjs.webelements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class TreeGrid extends ExtJSComponent {
 	
-	public TreeGrid(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public TreeGrid(String query) {
+		super(query);
 		// TODO Auto-generated constructor stub
 	}
 	
-	public TreeGrid(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public TreeGrid(WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**
@@ -52,7 +51,7 @@ public class TreeGrid extends ExtJSComponent {
 	 * @return - node
 	 */
 	public TreeNode getRootNode() {
-		final TreeNode treeNode = new TreeNode(driver, ExtJSQueryType.Custom, getExpression());
+		final TreeNode treeNode = new TreeNode(getComponentId());
 		return treeNode.getRootNode();
 	}
 	
@@ -62,7 +61,7 @@ public class TreeGrid extends ExtJSComponent {
 	 * @return TreeNode
 	 */
 	public TreeNode getSelectedNode() {
-		final TreeNode node = new TreeNode(driver, ExtJSQueryType.Custom, getExpression());
+		final TreeNode node = new TreeNode(getComponentId());
 		return node.getSelectedNode();
 	}
 	
@@ -94,7 +93,7 @@ public class TreeGrid extends ExtJSComponent {
 				+ "']"
 				+ //
 				")");
-		final TreeNode treeNode = new TreeNode(driver, ExtJSQueryType.Custom, getExpression());
+		final TreeNode treeNode = new TreeNode(getComponentId());
 		
 		return treeNode.getSelectedNode();
 	}
@@ -106,7 +105,7 @@ public class TreeGrid extends ExtJSComponent {
 	 * @return TreeNode
 	 */
 	public TreeNode selectNodeByName(final String name) {
-		final TreeNode treeNode = new TreeNode(driver, ExtJSQueryType.Custom, getExpression());
+		final TreeNode treeNode = new TreeNode(getComponentId());
 		treeNode.getRootNode().findNodeGridChild(name);
 		
 		return treeNode.getSelectedNode();

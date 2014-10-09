@@ -5,12 +5,12 @@ import org.openqa.selenium.WebElement;
 
 public class TextField extends Field {
 	
-	public TextField(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public TextField(String query) {
+		super(query);
 	}
 	
-	public TextField(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public TextField(WebElement topElement) {
+		super(topElement);
 	}
 	
 }

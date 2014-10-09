@@ -17,55 +17,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class JSExtendedWebElementIT extends BaseTest {
-	static WebDriver driver;
-	
-	static String htmlTestLocation;
-	
-	static String locator = "//";
-	
-	final static Logger logger = LoggerFactory.getLogger(JSExtendedWebElementIT.class);
-	
-	static FirefoxProfile profile = new FirefoxProfile();
-	
-	@AfterClass
-	public static void afterclass() {
-		try {
-			if (driver != null) {
-				driver.quit();
-			}
-		} catch (Exception e) {
-			logger.debug("Exception closing driver", e);
-		}
-	}
-	
+
+
 	@SuppressWarnings("unused")
 	@BeforeClass
 	public static void beforeClass() throws IOException {
-		URL res = JSExtendedWebElementIT.class.getResource("ExtJSTest.html");
-		htmlTestLocation = JSExtendedWebElementIT.class.getResource("ExtJSTest.html").toString();
-		logger.info("ExtJSTest Location: "
-				+ htmlTestLocation);
+        htmlTestLocation = JSExtendedWebElementIT.class.getResource("ExtJSTest.html").toString();
+		logger.info("ExtJSTest Location: " 	+ htmlTestLocation);
 	}
 	
 	public JSExtendedWebElementIT() {
 	}
-	
-	@Before
-	public void beforeMethod() {
-		if (driver == null) {
-			logger.info("Starting Selenium FirefoxDriver");
-			driver = new FirefoxDriver(profile);
-			logger.info("Navigating to: "
-					+ htmlTestLocation);
-			driver.navigate().to(htmlTestLocation);
-		}
-	}
-	
+
 	@Test(expected = ClassCastException.class)
 	public void classCastExceptionForInteger() {
 		// You cannot cast an output to Integer.
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		Integer retInt = (Integer) jsEl.execScriptClean("return 1+1;");
 	}
 	
@@ -73,14 +41,14 @@ public class JSExtendedWebElementIT extends BaseTest {
 	public void classCastExceptionForString() {
 		// You cannot cast an output to String.
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		String retString = (String) jsEl.execScriptClean("return 1+1;");
 	}
 	
 	@Test
 	public void elementConstructorTest() {
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		Assert.assertNotNull(jsEl);
 		
 		Object ret = null;
@@ -91,7 +59,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 	@Test
 	public void longJSReturnTest() {
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		// Long
 		Object ret = jsEl.execScriptClean("return 1+1");
 		Assert.assertTrue(ret instanceof Long);
@@ -104,7 +72,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 		// You cannot parse the output with Long.valueOf, but you can convert to string first (but you should just
 		// cast to long if it's castable.
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		Long retString = Long.valueOf(String.valueOf(jsEl.execScriptClean("return 1+1;")));
 	}
 	
@@ -112,7 +80,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 	public void noClassCastExceptionForStringValueOf() {
 		// You CAN parse the output with String.valueOf
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		String retString = String.valueOf(jsEl.execScriptClean("return 1+1;"));
 	}
 	
@@ -120,7 +88,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 	public void queryConstructorTest() {
 		// query to find the body tag
 		String query = "var arr = document.getElementsByTagName('body'); if(arr.length >=0){ return arr[0]; } else { return arr; }";
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, query);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(query);
 		Assert.assertNotNull(jsEl);
 		
 		Object ret = null;
@@ -131,7 +99,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 	@Test
 	public void returnBooleanTest() {
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		Object ret = null;
 		
 		// return true
@@ -158,7 +126,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 	@Test
 	public void returnIsNullTest() {
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		Boolean ret = jsEl.execScriptCleanReturnIsNull("");
 		Assert.assertTrue(ret);
 		
@@ -169,7 +137,7 @@ public class JSExtendedWebElementIT extends BaseTest {
 	@Test
 	public void simpleJSReturnTest() {
 		WebElement el = driver.findElement(By.xpath("//body"));
-		JSExtendedWebElement jsEl = new JSExtendedWebElement(driver, el);
+		JSExtendedWebElement jsEl = new JSExtendedWebElement(el);
 		// No return. This test proves that you need a return.
 		Object ret = jsEl.execScriptClean("1;");
 		Assert.assertEquals(null, ret);

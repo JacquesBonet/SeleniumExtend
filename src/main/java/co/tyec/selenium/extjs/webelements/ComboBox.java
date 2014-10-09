@@ -16,20 +16,18 @@ public class ComboBox extends ExtJSComponent {
     private WebElement input;
 
     /**
-     * @param driver
-     * @param queryType
      * @param query
      */
-    public ComboBox(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+    public ComboBox(String query) {
+		super(query);
 	}
 	
 	/**
 	 * @param elementContainer
 	 *            - locator of either parent element which wraps text input and drop down button or text input
 	 */
-	public ComboBox(WebDriver driver, WebElement elementContainer) {
-		super(driver, elementContainer);
+	public ComboBox( WebElement elementContainer) {
+		super(elementContainer);
 		
 	}
 	

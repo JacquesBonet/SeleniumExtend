@@ -35,32 +35,30 @@ public class JSExtendedWebElement {
 	
 	static protected long timeOutInSeconds = 5;
 	
-	protected WebDriver driver;
+	static protected WebDriver driver;
 	
-	protected JavascriptExecutor js = null;
+	static protected JavascriptExecutor js = null;
 	
 	protected WebElement topElement;
 	
-	protected WebDriverWait wait;
+	static protected WebDriverWait wait;
 	
 	/**
 	 * If a driver is set, but not a topElement, bad things could happen.
 	 * This method is only here so that the driver can be set, and then JS executed to find the top Element.
 	 * Maybe It should require a string to find the element?
 	 * 
-	 * @param driver
+	 * @param jsCode
 	 */
-	public JSExtendedWebElement(WebDriver driver, String jsCode) {
-		setDriverAndFindElementByScript(driver, jsCode);
+	public JSExtendedWebElement(String jsCode) {
+		findElementByScript(jsCode);
 	}
 	
 	/**
-	 * @param driver
 	 * @param topElement
 	 *            - locator of either parent topElement which wraps text input and drop down button or text input
 	 */
-	public JSExtendedWebElement(WebDriver driver, WebElement topElement) {
-		setDriver(driver);
+	public JSExtendedWebElement(WebElement topElement) {
 		setElement(topElement);
 	}
 	
@@ -160,14 +158,21 @@ public class JSExtendedWebElement {
 		return false;
 	}
 	
-	protected void setDriver(WebDriver driver) {
-		this.driver = driver;
-		this.js = (JavascriptExecutor) driver;
+	static public void setDriver(WebDriver aDriver) {
+		driver = aDriver;
+		js = (JavascriptExecutor) driver;
 		wait = new WebDriverWait(driver, timeOutInSeconds, sleepInMillis);
 	}
+
+    static public WebDriver getDriver() {
+        return driver;
+    }
+
+    static public JavascriptExecutor getJS() {
+        return js;
+    }
 	
-	private void setDriverAndFindElementByScript(WebDriver driver, String jsCode) {
-		setDriver(driver);
+	private void findElementByScript(String jsCode) {
 		WebElement element = null;
 		try {
 			element = (WebElement) js.executeScript(jsCode);

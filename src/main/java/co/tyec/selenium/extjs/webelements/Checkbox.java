@@ -13,12 +13,12 @@ public class Checkbox extends ExtJSComponent {
 			+ "writeDataToDiv(success, uuid);"
 			+ "}";
 	
-	public Checkbox(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Checkbox(String query) {
+		super(query);
 	}
 	
-	public Checkbox(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Checkbox(WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**

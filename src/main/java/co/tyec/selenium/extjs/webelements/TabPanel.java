@@ -13,13 +13,13 @@ public class TabPanel extends ExtJSComponent {
 	 */
 	private int tabIndex;
 	
-	public TabPanel(WebDriver driver, ExtJSQueryType queryType, String query, final Integer tabIndex) {
-		super(driver, queryType, query);
+	public TabPanel(String query, final Integer tabIndex) {
+		super(query);
 		this.tabIndex = tabIndex;
 	}
 	
-	public TabPanel(WebDriver driver, WebElement topElement, final Integer tabIndex) {
-		super(driver, topElement);
+	public TabPanel(WebElement topElement, final Integer tabIndex) {
+		super(topElement);
 		this.tabIndex = tabIndex;
 	}
 	

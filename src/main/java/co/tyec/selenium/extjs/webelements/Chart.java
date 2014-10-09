@@ -32,12 +32,12 @@ public class Chart extends ExtJSComponent {
 			+ "  return Ext.encode(dataList);"
 			+ "}";
 	
-	public Chart(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Chart(String query) {
+		super(query);
 	}
 	
-	public Chart(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Chart(WebElement topElement) {
+		super(topElement);
 	}
 	
 	public String getChartAsJSON() {

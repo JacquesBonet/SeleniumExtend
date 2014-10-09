@@ -1,6 +1,6 @@
 package co.tyec.selenium.extjs.webelements;
 
-import org.junit.Rule;
+import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.RuleChain;
 import org.junit.rules.TestRule;
@@ -8,9 +8,45 @@ import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
+
+
 
 public class BaseTest {
-	/**
+    final static Logger logger = LoggerFactory.getLogger(Button3IT.class);
+    public static WebDriver driver;
+    public static String htmlTestLocation;
+    static String locator = "//";
+    public static FirefoxProfile profile = new FirefoxProfile();
+
+    @Before
+    public void beforeMethod() {
+        if (driver == null) {
+            logger.info("Starting Selenium FirefoxDriver");
+            driver = new FirefoxDriver(profile);
+            JSExtendedWebElement.setDriver(driver);
+            logger.info("Navigating to: " + htmlTestLocation);
+            driver.navigate().to(htmlTestLocation);
+        }
+    }
+
+
+    @AfterClass
+    public static void afterclass() {
+        try {
+            if (driver != null) {
+                driver.quit();
+                driver = null;
+                JSExtendedWebElement.driver = null;
+            }
+        } catch (Exception e) {
+            logger.debug("Exception closing driver", e);
+        }
+    }
+
+    /**
 	 * This rule states that if there is an exception, log it to logger.
 	 * Without this, Junit will catch it in it's own XML logs, but it will not be displayed
 	 * in your personal logs or console.

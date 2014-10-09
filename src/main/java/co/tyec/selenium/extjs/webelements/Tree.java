@@ -1,17 +1,16 @@
 package co.tyec.selenium.extjs.webelements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class Tree extends ExtJSComponent {
 	
-	public Tree(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Tree(String query) {
+		super(query);
 	}
 	
-	public Tree(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Tree(WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**
@@ -35,8 +34,7 @@ public class Tree extends ExtJSComponent {
 	public String getErrorText() {
 		WebElement errorText = driver.findElement(By.xpath(getXPath()
 				+ "//div[@class='x-form-invalid-msg']"));
-		final String text = errorText.getText();
-		return text;
+		return errorText.getText();
 	}
 	
 	/**
@@ -45,7 +43,7 @@ public class Tree extends ExtJSComponent {
 	 * @return TreeNode
 	 */
 	public TreeNode getRootNode() {
-		final TreeNode treeNode = new TreeNode(driver, ExtJSQueryType.Custom, getExpression());
+		final TreeNode treeNode = new TreeNode(getComponentId());
 		return treeNode.getRootNode();
 	}
 	
@@ -77,7 +75,7 @@ public class Tree extends ExtJSComponent {
 				+ "']"
 				+ //
 				")");
-		final TreeNode treeNode = new TreeNode(driver, ExtJSQueryType.Custom, getExpression());
+		final TreeNode treeNode = new TreeNode(getComponentId());
 		
 		return treeNode.getSelectedNode();
 	}

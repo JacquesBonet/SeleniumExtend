@@ -4,12 +4,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class Radio extends ExtJSComponent {
-	public Radio(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Radio(String query) {
+		super(query);
 	}
 	
-	public Radio(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Radio( WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**

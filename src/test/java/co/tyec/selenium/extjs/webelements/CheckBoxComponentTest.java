@@ -12,11 +12,7 @@ import org.openqa.selenium.WebDriver;
  * 
  */
 public class CheckBoxComponentTest {
-	
-	WebDriver driver;
-	
-	JavascriptExecutor js;
-	
+
 	/**
 	 * Method setUp.
 	 * 
@@ -24,8 +20,8 @@ public class CheckBoxComponentTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		driver = Mockito.mock(WebDriver.class, Mockito.withSettings().extraInterfaces(JavascriptExecutor.class));
-		js = (JavascriptExecutor) driver;
+		WebDriver driver = Mockito.mock(WebDriver.class, Mockito.withSettings().extraInterfaces(JavascriptExecutor.class));
+        JSExtendedWebElement.setDriver( driver);
 		// Global Mocks
 		Mockito.when(((JavascriptExecutor) driver).executeScript(Mockito.contains("Ext.Ajax.isLoading()"))).thenReturn("false");
 	}
@@ -35,7 +31,7 @@ public class CheckBoxComponentTest {
 	 */
 	@Test
 	public void testCheckBox() {
-		final Checkbox chk = Mockito.spy(new Checkbox(driver, ExtJSQueryType.ComponentQuery, "[@text='checkBox_title']"));
+		final Checkbox chk = Mockito.spy(new Checkbox("[text='checkBox_title']"));
 		Mockito.doReturn("checkBox_id").when(chk).getComponentId();
 		chk.getComponentId();
 		

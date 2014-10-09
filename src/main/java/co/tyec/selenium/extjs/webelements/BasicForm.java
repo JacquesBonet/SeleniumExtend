@@ -1,6 +1,5 @@
 package co.tyec.selenium.extjs.webelements;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -8,15 +7,15 @@ import org.openqa.selenium.WebElement;
  */
 public class BasicForm extends ExtJSComponent {
 	
-	public BasicForm(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public BasicForm(String query) {
+		super(query);
 	}
 	
-	public BasicForm(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public BasicForm(WebElement topElement) {
+		super(topElement);
 	}
 	
-	public ExtJSComponent findComponentIn(ExtJSQueryType queryType, String query) {
-		return new ExtJSComponent(driver, queryType, query);
+	public ExtJSComponent findComponentIn(String query) {
+		return new ExtJSComponent(query);
 	}
 }

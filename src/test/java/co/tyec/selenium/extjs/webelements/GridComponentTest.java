@@ -1,9 +1,8 @@
 package co.tyec.selenium.extjs.webelements;
 
-import org.junit.Before;
+import org.junit.*;
 import org.mockito.Mockito;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 
 
 public class GridComponentTest {
@@ -15,8 +14,9 @@ public class GridComponentTest {
 	public void setUp() throws Exception {
 		driver = Mockito.mock(WebDriver.class, Mockito.withSettings().extraInterfaces(JavascriptExecutor.class));
 		js = (JavascriptExecutor) driver;
+        JSExtendedWebElement.setDriver( driver);
 		// Global Mocks
-		Mockito.when(((JavascriptExecutor) driver).executeScript(Mockito.contains("Ext.Ajax.isLoading()"))).thenReturn("false");
+		Mockito.when(js.executeScript(Mockito.contains("Ext.Ajax.isLoading()"))).thenReturn("false");
 	}
 	
 	/**
@@ -26,13 +26,11 @@ public class GridComponentTest {
 /*	@Test
     public void testGridTypeLocator() {
 		// chang this line to allow some creation of Grid. see Checkbox.
-		WebElement mockedEl = Mockito.mock(WebElement.class);
-		Mockito.when(js.executeScript("window.findComponentByText(null,'grid')")).thenReturn("grid_id");
-		Grid grid = new Grid(driver, ExtJSQueryType.ComponentQuery, "[text='grid']");
+        final Grid gridMock = Mockito.spy(new Grid("[text='grid']"));
+		Mockito.when(js.executeScript("window.findComponentByText('grid','grid')")).thenReturn(gridMock);
+		Grid grid = new Grid("[text='grid']");
 		Assert.assertNotNull(grid);
-
-		Mockito.when(js.executeScript("window.findComponentByText(null,'grid')")).thenReturn("grid_id");
-		Assert.assertEquals("Grid id is incorrect", "grid_id", grid.getComponentId());
+		Assert.assertEquals("Grid id", "grid_id", grid.getComponentId());
 	}
 */
     // /**

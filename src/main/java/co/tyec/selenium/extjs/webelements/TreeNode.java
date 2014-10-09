@@ -19,8 +19,8 @@ public class TreeNode extends ExtJSComponent {
 	 */
 	private String treeExpression = "";
 	
-	public TreeNode(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public TreeNode(String query) {
+		super(query);
 		treeExpression = getExpression();
 	}
 	

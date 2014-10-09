@@ -10,15 +10,18 @@ public class TriggerField extends ExtJSComponent {
 	 */
 	private Button trigger;
 	
-	public TriggerField(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
-		trigger = new Button(driver, queryType, query);
+	public TriggerField(String query) {
+		super(query);
+		trigger = new Button(query);
 	}
 	
-	public TriggerField(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
-		trigger = new Button(driver, ExtJSQueryType.GetCmp, getExpression()
+	public TriggerField(WebElement topElement) {
+		super(topElement);
+		trigger = new Button(getComponentId()
 				+ ".trigger");
+
+  //      trigger = new Button(driver, ExtJSQueryType.GetCmp, getExpression()
+  //              + ".trigger");
 	}
 	
 	/**

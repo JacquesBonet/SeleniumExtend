@@ -1,7 +1,6 @@
 package co.tyec.selenium.extjs.webelements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -10,12 +9,12 @@ import org.openqa.selenium.WebElement;
  */
 public class Menu extends ExtJSComponent {
 	
-	public Menu(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Menu(String query) {
+		super(query);
 	}
 	
-	public Menu(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Menu(WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**

@@ -13,12 +13,12 @@ public class Button extends ExtJSComponent {
 			+ "var writeDataToDiv(success, uuid);"
 			+ "}";
 	
-	public Button(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Button(String query) {
+		super(query);
 	}
 	
-	public Button(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Button(WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**

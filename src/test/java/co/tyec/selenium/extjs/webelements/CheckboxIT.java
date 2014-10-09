@@ -17,27 +17,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class CheckboxIT extends BaseTest {
-	static WebDriver driver;
-	
-	static String htmlTestLocation;
-	
+
 	static String locator = "//";
 	
 	final static Logger logger = LoggerFactory.getLogger(CheckboxIT.class);
-	
-	static FirefoxProfile profile = new FirefoxProfile();
-	
-	@AfterClass
-	public static void afterclass() {
-		try {
-			if (driver != null) {
-				driver.quit();
-			}
-		} catch (Exception e) {
-			logger.debug("Exception closing driver", e);
-		}
-	}
-	
+
 	@SuppressWarnings("unused")
 	@BeforeClass
 	public static void beforeClass() throws IOException {
@@ -49,21 +33,10 @@ public class CheckboxIT extends BaseTest {
 	
 	public CheckboxIT() {
 	}
-	
-	@Before
-	public void beforeMethod() {
-		if (driver == null) {
-			logger.info("Starting Selenium FirefoxDriver");
-			driver = new FirefoxDriver(profile);
-			logger.info("Navigating to: "
-					+ htmlTestLocation);
-			driver.navigate().to(htmlTestLocation);
-		}
-	}
-	
+
 	@Test
 	public void selectExtJSButton() {
-		Button button = new Button(driver, ExtJSQueryType.ComponentQuery, "[itemId='pressed']");
+		Button button = new Button("[itemId='pressed']");
 		button.click();
 		// DomElement pressedDiv = page.domElementGet("DIV[@id='pressed']//*[@textContents='pressed: true']", "//");
 		WebElement pressedDiv = driver.findElement(By.xpath("//div[@id='pressed']//*[contains(text(), 'pressed: true')]"));
@@ -73,7 +46,7 @@ public class CheckboxIT extends BaseTest {
 	
 	@Test
 	public void selectExtJSCheckBox() {
-		Checkbox checkbox = new Checkbox(driver, ExtJSQueryType.ComponentQuery, "[name='myCheckbox']");
+		Checkbox checkbox = new Checkbox("[name='myCheckbox']");
 		Assert.assertNotNull(checkbox.isChecked());
 		
 		checkbox.check();
@@ -88,7 +61,7 @@ public class CheckboxIT extends BaseTest {
 	
 	@Test
 	public void selectExtJSComboBox() {
-		ComboBox comboBox = new ComboBox(driver, ExtJSQueryType.ComponentQuery, "[name='state']");
+		ComboBox comboBox = new ComboBox("[name='state']");
 		comboBox.setValue("Alaska");
 		
 		// DomElement stateInput = page.domElementGet("INPUT[@name='state']", "//");

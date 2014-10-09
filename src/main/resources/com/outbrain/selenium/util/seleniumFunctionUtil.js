@@ -102,49 +102,27 @@ var findComponentByText = function(text, xtype, incInvisible, debug) {
 	var item = "";
 	var items = "";
 	Ext.ComponentMgr.all.find(function(c) {
-		switch (xtype) {
-			case 'window' :
-				item = Ext.WindowMgr.getActive().id + ",";
-				break;
-			case 'grid' :
-				if ((foundIn(c, (rtrim(ltrim(xtype)))) && (c.isVisible()))
-						|| ((c.isVisible()))
-						&& (c.getXType() == rtrim(ltrim(xtype)) || c.xtype == rtrim(ltrim(xtype)))) {
-					item += c.id + ",";
-				}
-				break;
-			case 'tabpanel' :
-				if ((rtrim(ltrim(c.text)) == text
-						|| rtrim(ltrim(c.fieldLabel)) == text || rtrim(ltrim(c.title)) == text)
-						&& (c.ownerCt.xtype == xtype || c.ownerCt.type == rtrim(ltrim(xtype)))
-						&& (c.ownerCt.isVisible())) {
-					item = c.ownerCt.id + ",";
-				}
-				break;
-			default :
-				if (xtype) {
-					if (text) {
-						if ((incInvisible || c.isVisible())
-								&& (rtrim(ltrim(c.text)) == text 
-								|| rtrim(ltrim(c.boxLabel)) == text
-								|| rtrim(ltrim(c.fieldLabel)) == text || rtrim(ltrim(c.title)) == text)
-								&& (c.getXType() == rtrim(ltrim(xtype))
-										|| c.xtype == rtrim(ltrim(xtype)) || c.type == rtrim(ltrim(xtype))))
-							item += c.id+  ",";
-					} else {
-						if ((incInvisible || c.isVisible())
-								&& (c.getXType() == rtrim(ltrim(xtype))
-										|| c.xtype == rtrim(ltrim(xtype)) || c.type == rtrim(ltrim(xtype))))
-							items += c.id + ",";
-					}
-				} else {
-					if ((incInvisible || c.isVisible())
-							&& ((rtrim(ltrim(c.text)) == text
-									|| rtrim(ltrim(c.fieldLabel)) == text || rtrim(ltrim(c.title)) == text)))
-						item += c.id + ",";
-				}
-				break;
-		}
+            if (xtype) {
+                if (text) {
+                    if ((incInvisible || c.isVisible())
+                            && (rtrim(ltrim(c.text)) == text
+                            || rtrim(ltrim(c.boxLabel)) == text
+                            || rtrim(ltrim(c.fieldLabel)) == text || rtrim(ltrim(c.title)) == text)
+                            && (c.getXType() == rtrim(ltrim(xtype))
+                                    || c.xtype == rtrim(ltrim(xtype)) || c.type == rtrim(ltrim(xtype))))
+                        item += c.id+  ",";
+                } else {
+                    if ((incInvisible || c.isVisible())
+                            && (c.getXType() == rtrim(ltrim(xtype))
+                                    || c.xtype == rtrim(ltrim(xtype)) || c.type == rtrim(ltrim(xtype))))
+                        items += c.id + ",";
+                }
+            } else {
+                if ((incInvisible || c.isVisible())
+                        && ((rtrim(ltrim(c.text)) == text
+                                || rtrim(ltrim(c.fieldLabel)) == text || rtrim(ltrim(c.title)) == text)))
+                    item += c.id + ",";
+            }
 	});
 	if(debug){
 		var dur = (new Date()).getTime() - timeStart;

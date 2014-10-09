@@ -16,13 +16,13 @@ public class Grid extends ExtJSComponent {
 	 */
 	String gridExp = "";
 
-	public Grid(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Grid(String query) {
+		super(query);
 		gridExp = getExpression();
 	}
 	
-	public Grid(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public Grid(WebElement topElement) {
+		super(topElement);
 		gridExp = getExpression();
 	}
 	
@@ -191,16 +191,6 @@ public class Grid extends ExtJSComponent {
 	}
 	
 	/**
-	 * return the ui row count (just what the user see)
-	 * 
-	 * @return Long
-	 */
-	public Long getGridRowCount() {
-		waitToLoad();
-		return (Long) execScriptOnExtJsCmp("return extCmp.view.getRows().length");
-	}
-	
-	/**
 	 * Method getGridStoreCount.
 	 * 
 	 * @return Integer
@@ -297,7 +287,7 @@ public class Grid extends ExtJSComponent {
 		actions.contextClick(el);
 		actions.perform();
 		
-		return new Menu(driver, ExtJSQueryType.GetCmp, menuId);
+		return new Menu(menuId);
 	}
 	
 	/**

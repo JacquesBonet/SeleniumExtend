@@ -1,7 +1,6 @@
 package co.tyec.selenium.extjs.webelements;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 /**
@@ -9,12 +8,12 @@ import org.openqa.selenium.WebElement;
  */
 public class Field extends ExtJSComponent {
 	
-	public Field(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, queryType, query);
+	public Field(String query) {
+		super(query);
 	}
 	
-	public Field(WebDriver driver, WebElement topLevel) {
-		super(driver, topLevel);
+	public Field(WebElement topLevel) {
+		super(topLevel);
 	}
 	
 	/**
