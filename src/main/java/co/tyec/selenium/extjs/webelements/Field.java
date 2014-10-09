@@ -79,9 +79,7 @@ public class Field extends ExtJSComponent {
 	public void sendKeys(final String text) {
 		waitToLoad();
 		
-		focus();
 		topElement.sendKeys(text);
-		blur();
 	}
 	
 	/**
