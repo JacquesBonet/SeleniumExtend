@@ -3,7 +3,6 @@ package co.tyec.selenium.extjs.webelements;
 import com.outbrain.selenium.util.ThreadUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.internal.seleniumemulation.JavascriptLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,58 +59,38 @@ public class ExtJSComponent extends JSExtendedWebElement {
     protected String extJsCmpId = null;
 
     /**
-     * @param driver
-     * @param queryType
      * @param query     - ExtJS Query that would be used in Ext.getCmp('combobox-1001');
      */
-    public ExtJSComponent(WebDriver driver, ExtJSQueryType queryType, String query) {
-		super(driver, convertQueryTypeAndQueryToScript(queryType, query));
-		if(queryType.equals(ExtJSQueryType.GetCmp)) {
+    public ExtJSComponent(String query) {
+		super(convertQueryToScript(query));
+		if (query.charAt(0) != '[') {
 			this.extJsCmpId = query;
 		}
 	}
 	
 	/**
-	 * @param driver
 	 * @param topElement
 	 *            - locator of either parent topElement which wraps text input and drop down button or text input
 	 */
-	public ExtJSComponent(WebDriver driver, WebElement topElement) {
-		super(driver, topElement);
+	public ExtJSComponent(WebElement topElement) {
+		super(topElement);
 	}
 	
 	/**
      * ExtJS Query that would be used in Ext.ComponentQuery.query("[name='myCheckbox']");
      */
-    static protected String convertQueryTypeAndQueryToScript(ExtJSQueryType queryType, String query) {
+    static protected String convertQueryToScript(String query) {
         String queryScript = null;
 
-        if (queryType == null) {
-            return null;
-        } else if (queryType.equals(ExtJSQueryType.ComponentQuery)) {
+        if (query.charAt(0) == '[') {
             queryScript = String.format("%s; %s; return SExt.findVisibleComponentElement(\"%s\");", FUNCTION_DEFINE_SExt, FUNCTION_findVisibleComponentElement,
                     query);
-        } else if (queryType.equals(ExtJSQueryType.ComponentQuery3)) {
-            queryScript = String.format("%s; %s; return SExt.findVisibleComponentElement(\"%s\");", FUNCTION_DEFINE_SExt, FUNCTION_findVisibleComponentElement3,
-                    query);
-        } else if (queryType.equals(ExtJSQueryType.GetCmp)) {
+        } else
             queryScript = String.format("return Ext.getCmp(\"%s\").getEl().dom;", query);
-        } else {
-            queryScript = query;
-        }
 
         return queryScript;
     }
 
-    /**
-     * Method blur.
-     *
-     * @deprecated
-	 */
-	public void blur() {
-		fireEvent("blur");
-	}
-	
 	/**
 	 * This is used to run javascript scrits on the ExtJS ExtJSComponent. For Example, execScriptOnExtJsComponent("return extCmp.getValue()"); will run the
 	 * JavaScript method getValue on the ExtJS component object.
@@ -153,22 +132,6 @@ public class ExtJSComponent extends JSExtendedWebElement {
 		return String.valueOf(execScriptCleanReturnBoolean(finalScript));
 	}
 	
-	@Deprecated
-	void fireEvent(String event) {
-		JavascriptLibrary lib = new JavascriptLibrary();
-		lib.callEmbeddedSelenium(driver, "triggerEvent", topElement, event);
-	}
-	
-	/**
-	 * Method focus.
-	 * 
-	 * @deprecated remove all event methods
-	 */
-	@Deprecated
-	public void focus() {
-		fireEvent("focus");
-	}
-	
 	/**
 	 * return the componentId
 	 * 
@@ -197,13 +160,13 @@ public class ExtJSComponent extends JSExtendedWebElement {
 
     /**
      * Returns the absolute expression that resolves this proxy's Ext component.
-	 * 
+	 *
 	 * @return String
 	 */
 	public String getExpression() {
 		return String.format("window.Ext.getCmp('%s')", getComponentId());
 	}
-	
+
 	/**
 	 * Returns an XPath to the Ext component, which contains the ID provided by getId()
 	 * 
